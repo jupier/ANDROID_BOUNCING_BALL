@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue"
+    tools:context=".GameMenu" >
+
+    <Button
+        android:id="@+id/aboutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/settingsBtn"
+        android:layout_below="@+id/settingsBtn"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/button_custom_menu"
+        android:text="about" />
+
+    <Button
+        android:id="@+id/playBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/settingsBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/button_custom_menu"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="play" />
+
+    <Button
+        android:id="@+id/settingsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/playBtn"
+        android:layout_centerVertical="true"
+        android:background="@drawable/button_custom_menu"
+        android:text="settings" />
+
+</RelativeLayout>

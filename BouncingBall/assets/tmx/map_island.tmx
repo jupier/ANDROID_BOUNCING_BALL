@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="island" tilewidth="32" tileheight="32">
+  <image source="gfx/island.png" trans="ff00ff" width="512" height="256"/>
+ </tileset>
+ <layer name="Blocks" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztmMluFDEURR3yBYQFO9i0lB1C6j0087QJcxhVjCtgwbRi+HVeibYw1vNUrtdJ4BzpKOrqKk/XZbuz45zbKXjCgQXHXXnsvQtHHta05MH7YU8uj5OZ78jDhjCP3Phb5nFDvCnemrHMuehp2ynxdOMzPo9dp4+7dn3Mbc48HomPxSeV99f2c46cW9vWy7+8f1jlbElLHuF61pLHYV6PDhubeD9a5mnrHJ2StfbMU/GZ+LyhnDmI2zJHHgc5/6es79oz78T34ofKMubqc9yWMY/UuSq1x8d5WO95vX3PvXOrtd/E7+KP4FoOqz5brlepcViurcWq74O4JR5T3Bb3gntb1tGe+bPp/5eE/d+e8PwF8aJ4SbysfN8yboPLn1n2lGeuiFcL5ebmT6l9cR7hGmXx+9yvj4uKMs6L59Z/vbfFO+Jd8d7ENngG9/dcC/s7joOWx33xQWe9OVLvxyJxfZO/P+K1ZHyfXogvxVfi6+De6xPKH1y+j1oeb8S34rXOulO07h9+Do15rNzvfeCT+Fn84v7sDauMnvhzfF1r25jJR6XMffFsor4zietDoa9hHsvAr+LD4PO+0ocQbYy0e5aJPteq7YMlwz3Dz/+fkVsG9abMnSunlqn1sfaeqVn06Mc9d0/urH0UDMdb+z7MIldOy/94U8/nyrAa590JZfe2pfS8lklIKovaM1WpDfEZxXL8tXlQU1fvfAv7VSpr4fQzvV+fSnVo42k1dnPVVToHWtTZ6phJ7d74P3sQ2SAiIiIiIiLi0RQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANssvLr66Pg==
+  </data>
+ </layer>
+ <objectgroup name="wall" width="100" height="100">
+  <object x="5" y="1" width="312" height="713"/>
+  <object x="322" y="515" width="441" height="199"/>
+  <object x="1028" y="515" width="542" height="202"/>
+  <object x="1570" y="516" width="829" height="267"/>
+  <object x="2400" y="517" width="188" height="203"/>
+  <object x="2590" y="549" width="30" height="153"/>
+  <object x="2620" y="580" width="32" height="142"/>
+  <object x="2653" y="612" width="31" height="101"/>
+  <object x="3043" y="3" width="182" height="767"/>
+  <object x="2948" y="516" width="92" height="232"/>
+  <object x="2916" y="548" width="30" height="163"/>
+  <object x="2884" y="580" width="30" height="124"/>
+  <object x="2820" y="611" width="63" height="97"/>
+  <object x="2788" y="644" width="31" height="65"/>
+  <object x="2684" y="674" width="101" height="37"/>
+  <object x="2685" y="645" width="31" height="31"/>
+  <object x="764" y="579" width="262" height="172"/>
+  <object x="835" y="546" width="192" height="31"/>
+  <object x="836" y="515" width="58" height="30"/>
+  <object x="740" y="387" width="118" height="59"/>
+  <object x="1093" y="452" width="151" height="61"/>
+  <object x="1248" y="484" width="27" height="29"/>
+  <object x="1893" y="357" width="213" height="159"/>
+  <object x="2659" y="516" width="216" height="27"/>
+  <object x="2692" y="546" width="151" height="27"/>
+  <object x="2723" y="576" width="57" height="29"/>
+ </objectgroup>
+ <objectgroup name="enemies" width="100" height="100">
+  <object x="769" y="554" width="61" height="21"/>
+  <object x="896" y="523" width="128" height="20"/>
+  <object x="1869" y="361" width="24" height="154"/>
+  <object x="2107" y="360" width="26" height="154"/>
+  <object x="2717" y="652" width="69" height="22"/>
+ </objectgroup>
+ <objectgroup name="player" width="100" height="100">
+  <object x="579" y="484" width="27" height="27"/>
+ </objectgroup>
+ <objectgroup name="enemies_move" width="100" height="100">
+  <object x="772" y="357" width="26" height="26"/>
+  <object x="2691" y="483" width="28" height="26"/>
+  <object x="1154" y="419" width="26" height="26"/>
+ </objectgroup>
+ <objectgroup name="enemies_wall" width="100" height="100">
+  <object x="741" y="354" width="26" height="28"/>
+  <object x="835" y="356" width="24" height="27"/>
+  <object x="2661" y="481" width="23" height="28"/>
+  <object x="2851" y="484" width="24" height="26"/>
+  <object x="1058" y="420" width="28" height="25"/>
+  <object x="1250" y="420" width="28" height="26"/>
+ </objectgroup>
+</map>
