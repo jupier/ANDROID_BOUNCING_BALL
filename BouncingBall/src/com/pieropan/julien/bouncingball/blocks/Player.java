@@ -11,6 +11,7 @@ public class Player extends AnimatedSprite {
 
 	// CONSTANTS
 	
+	public static final Float PLAYER_JUMP_VELOCITY = 15.0f;
 	public static final Integer PLAYER_LIFES = 3;
 	public static final String PLAYER_NAME = "player";
 	public static final short CATEGORYBIT_PLAYER = 4;
@@ -25,11 +26,13 @@ public class Player extends AnimatedSprite {
 	// FIELDS
 	
 	private Integer lifes;
+	private Float jumpVelocity;
 	
 	// METHODS
 	
     public Player(final float pX, final float pY, final TiledTextureRegion pTiledTextureRegion, final VertexBufferObjectManager pVertexBufferObjectManager) {
         super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
+        jumpVelocity = Player.PLAYER_JUMP_VELOCITY;
     }
 
 	public Integer getLifes() {
@@ -39,5 +42,16 @@ public class Player extends AnimatedSprite {
 	public void setLifes(Integer lifes) {
 		this.lifes = lifes;
 	}
+
+	public Float getJumpVelocity() {
+		return jumpVelocity;
+	}
+
+	public void setJumpVelocity() {
+		if (this.jumpVelocity < this.PLAYER_JUMP_VELOCITY * 1.5f)
+			this.jumpVelocity = this.jumpVelocity * 1.5f;
+	}
+	
+	
 
 }

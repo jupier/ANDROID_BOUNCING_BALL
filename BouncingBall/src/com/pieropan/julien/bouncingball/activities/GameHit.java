@@ -63,7 +63,7 @@ public class GameHit extends Activity {
 	{
 		Bundle extras = this.getIntent().getExtras();
 		
-		this.playerLifesIntent = extras.getInt(GameMenu.INTENT_MAP_LIFE);
+		this.playerLifesIntent = extras.getInt(GameMenu.INTENT_MAP_LIFE) - 1;
 		this.mapNameIntent = extras.getString(GameMenu.INTENT_MAP_NAME);
 		this.isMusic = extras.getBoolean(GameMenu.INTENT_SETTING_MUSIC);
 		this.isSounds = extras.getBoolean(GameMenu.INTENT_SETTING_SOUNDS);

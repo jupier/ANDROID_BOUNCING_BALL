@@ -26,7 +26,8 @@
         </activity>
         <activity
             android:name="com.pieropan.julien.bouncingball.activities.GameMain"
-            android:label="@string/title_activity_game_main" >
+            android:label="@string/title_activity_game_main"
+            android:configChanges="orientation|screenSize" >
         </activity>
         <activity
             android:name="com.pieropan.julien.bouncingball.activities.GameHit"
