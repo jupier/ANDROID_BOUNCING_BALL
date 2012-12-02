@@ -2,13 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"
-    tools:context=".GameMaps" >
+    android:background="@color/pink"
+    tools:context=".GameWorlds" >
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
@@ -19,21 +19,23 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="map selection"
+            android:layout_weight="0.00"
+            android:text="select the world"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ListView
-            android:id="@+id/mapsLV"
+            android:id="@+id/worldLIST"
             android:layout_width="match_parent"
-            android:layout_height="189dp" >
+            android:layout_height="189dp"
+            android:layout_weight="0.00"
+            android:background="@color/pink" >
         </ListView>
 
         <Button
-            android:id="@+id/returnMapsBTN"
+            android:id="@+id/returnWorldBTN"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="29dp"
-            android:background="@drawable/button_custom_menu"
+            android:background="@drawable/button_custom_submenu"
             android:text="return" />
 
     </LinearLayout>

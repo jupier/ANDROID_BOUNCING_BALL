@@ -26,8 +26,8 @@
         </activity>
         <activity
             android:name="com.pieropan.julien.bouncingball.activities.GameMain"
-            android:label="@string/title_activity_game_main"
-            android:configChanges="orientation|screenSize" >
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_game_main" >
         </activity>
         <activity
             android:name="com.pieropan.julien.bouncingball.activities.GameHit"
@@ -43,7 +43,19 @@
         </activity>
         <activity
             android:name="com.pieropan.julien.bouncingball.activities.GameMaps"
-            android:label="@string/title_activity_game_maps"  
+            android:label="@string/title_activity_game_maps"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.pieropan.julien.bouncingball.activities.GameWin"
+            android:label="@string/title_activity_game_win"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.pieropan.julien.bouncingball.activities.GameWorlds"
+            android:label="@string/title_activity_game_worlds"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>

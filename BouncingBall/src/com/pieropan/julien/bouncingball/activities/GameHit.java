@@ -1,5 +1,7 @@
 package com.pieropan.julien.bouncingball.activities;
 
+import com.pieropan.julien.bouncingball.helpers.MyIntent;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -12,12 +14,9 @@ public class GameHit extends Activity {
 
 	// FIELDS
 	
-	private Integer playerLifesIntent = null;
-	private String mapNameIntent = null;
-	private boolean isMusic = true;
-	private boolean isSounds = true;
-	
 	private Typeface font = null;
+	
+	private MyIntent extras = null;
 	
 	private Button btnContinue = null;
 	private Button btnQuit = null;
@@ -45,14 +44,14 @@ public class GameHit extends Activity {
 		btnQuit.setTypeface(font);
 		tvLifes.setTypeface(font);
 		
-		if (this.playerLifesIntent == 0)
+		if (this.extras.getLifes() == 0)
 		{	
 			tvLifes.setText("game over");
 			btnContinue.setEnabled(false);
 		}
 		else
 		{
-			tvLifes.setText("lifes : " + playerLifesIntent);
+			tvLifes.setText("lifes : " + this.extras.getLifes());
 			btnContinue.setEnabled(true);
 		}
 		
@@ -61,12 +60,13 @@ public class GameHit extends Activity {
 	
 	private void loadIntents()
 	{
-		Bundle extras = this.getIntent().getExtras();
+		Bundle extra = this.getIntent().getExtras();
 		
-		this.playerLifesIntent = extras.getInt(GameMenu.INTENT_MAP_LIFE) - 1;
-		this.mapNameIntent = extras.getString(GameMenu.INTENT_MAP_NAME);
-		this.isMusic = extras.getBoolean(GameMenu.INTENT_SETTING_MUSIC);
-		this.isSounds = extras.getBoolean(GameMenu.INTENT_SETTING_SOUNDS);
+		if (extra != null)
+		{
+			this.extras = (MyIntent) extra.getSerializable(GameMenu.INTENT_NAME);
+			this.extras.setLifes(this.extras.getLifes() - 1);
+		}
 	}
 	
 	private void createListeners()
@@ -76,10 +76,7 @@ public class GameHit extends Activity {
 			@Override
 			public void onClick(View v) {
 				mIntent = new Intent(GameHit.this, GameMain.class);
-				mIntent.putExtra(GameMenu.INTENT_MAP_NAME, mapNameIntent);
-				mIntent.putExtra(GameMenu.INTENT_MAP_LIFE, playerLifesIntent);
-				mIntent.putExtra(GameMenu.INTENT_SETTING_MUSIC, isMusic);
-				mIntent.putExtra(GameMenu.INTENT_SETTING_SOUNDS, isSounds);
+				mIntent.putExtra(GameMenu.INTENT_NAME, extras);
 				startActivity(mIntent);
 				finish();
 			}
@@ -90,8 +87,7 @@ public class GameHit extends Activity {
 			@Override
 			public void onClick(View v) {
 				mIntent = new Intent(GameHit.this, GameMenu.class);
-				mIntent.putExtra(GameMenu.INTENT_SETTING_MUSIC, isMusic);
-				mIntent.putExtra(GameMenu.INTENT_SETTING_SOUNDS, isSounds);
+				mIntent.putExtra(GameMenu.INTENT_NAME, extras);
 				startActivity(mIntent);
 				finish();
 			}

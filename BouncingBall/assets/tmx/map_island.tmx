@@ -5,7 +5,7 @@
  </tileset>
  <layer name="Blocks" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJztmElv1DAYhj30F1AO3OAyUm8Iae5Q9u1S9rIqrCdAiO3E8tf5LCXiI/q8JfZMB55HetROJvH2OrbbXefcbsITDlpw3KXHfnDpyKM1JXnwfrQnlsfJyHfk0QadR2z8W+ZxQ7wp3qpYZi3mtO2UeLrwmSGPPWePu3Xd51Yzj0fiY/FJ5v25/ayRc2nb5vIv7x+tcm5JSR56PSvJ4yivR0eNdbwfJfO0dI5Oydp65qn4THxeUE4Nxm2pkccm5/+U9d165p34XvyQWUatPo/b4vMInatCe/w4j9Z73ty+x965/d7v4g/xp7oWo1WfW65XtfbHVn3vxIV4zHBHPFD3lvRlzvzZtv+XXBAvipfEy8b3JePWufiZ5cB45op4NVFubP6k2jfOQ69Rm/77/Lx4rv85eFu8I94V700o078PO/3vnft7run++nGw8rgvPphQby6h92MZuL7OPMZriR/HF+JL8ZX4Wt17PbPMj72ezsX7aOXxRnwrXptQdw6l+8cwh3we++JK/Cx+Eb/2n1fuz55oOWBd09ettvlMPhllHopnA/WdCVzvEn3VeayU38SH6vOhi2ONkXXPKtDnXK19MOWwVngW6tov5aJBvSFj58qpZVp9zL1nahZzHMY9dk/srL0N6vG2vtdZxMop+R9v6PlYGa3GeW9C2XPbknreykQTyiL3TJVqw/iM0nL8rXmQU9fc+ab7lSprOcpE55CzNlnj2WrsatWVOge2qLNUvT+m1qf/2U1kg4iIiIiIiIjbKQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACsl9/+9LoZ
+   eJztmLlv1EAUh72kBxEKOmhWSoeQtodwX00gIReHzFkBQlwVgX+dN5ItHtbzXJ7ZzYrvkz4lO2vP9RvPONlsmmYz4IWIazDd8wnXzgd5QHlycySPOviej4ue78ijDjoP3/zXzOOB+FB8VLDOUkzp2yXxcuI9fR5bjT3vVrnLrWQeR+Kx+Czy+thxlsg5tW9TSTnP122/qpVzTVLy0PtZSh6neT86bSzj+UhZp6lrNCdr657n4gvxZUI9JRj2pUQeq1z/Ofu7dc8H8aP4KbKOUmMe9sXlMfZeNXbGD/OofeZNHbvvmdvu/CmeiL9UmY9aY665X5U6H2uNvRVn4hnDDXFHXZsylinrZ93+X3JDvCneEm8b36fMW9v431l2jHvuiHcD9frWT6h/wzz0HrXqv8+vi9e6n72PxSfirriXUad7Hja639vm37Wmx+vmwcrjqbif0W4sY8/HfKR8mXkM9xI3j6/E1+Ib8a269n5knZ87HW3jH6OVxzvxvXgvo20fZztTz49+Dbk8tsWF+FX8Jn7vPi+av2eiZY9VpsutvrlMvhh1HopXR9q7MlLeBsaq81gof4gH6vNh48eaoyHnOnPPc6d1Dobs9wrHTJX9Vs4qtDum770yt05rjLHX5GYxxX7efdf43rXXQT3f1vc6C189Kf/jHbvfV0eted7KqHtqX0L3W5loxrKIfacK9WH4jlJz/q11ENPW1PWmxxWqaz7IROcQszdZ81lr7kq1FXoPrNFmqvp8DO1P/7OryAYRERERERER11MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWC5/AGEEv+g=
   </data>
  </layer>
  <objectgroup name="wall" width="100" height="100">
@@ -35,6 +35,10 @@
   <object x="2723" y="576" width="57" height="29"/>
   <object x="836" y="515" width="87" height="28"/>
   <object x="1765" y="419" width="54" height="28"/>
+  <object x="320" y="2" width="572" height="25"/>
+  <object x="896" y="3" width="859" height="24"/>
+  <object x="1759" y="5" width="598" height="22"/>
+  <object x="2358" y="5" width="683" height="22"/>
  </objectgroup>
  <objectgroup name="enemies" width="100" height="100">
   <object x="769" y="554" width="61" height="21"/>
@@ -42,22 +46,23 @@
   <object x="2107" y="360" width="26" height="154"/>
   <object x="2717" y="652" width="69" height="22"/>
   <object x="1762" y="450" width="60" height="19"/>
+  <object x="929" y="524" width="95" height="19"/>
  </objectgroup>
  <objectgroup name="player" width="100" height="100">
   <object x="579" y="484" width="27" height="27"/>
  </objectgroup>
  <objectgroup name="enemies_move" width="100" height="100">
-  <object x="2691" y="483" width="28" height="26"/>
-  <object x="1088" y="418" width="158" height="29"/>
   <object x="768" y="321" width="32" height="126"/>
   <object x="1410" y="480" width="188" height="29"/>
   <object x="1570" y="480" width="158" height="30"/>
+  <object x="1098" y="419" width="119" height="28"/>
+  <object x="2722" y="351" width="29" height="95"/>
  </objectgroup>
- <objectgroup name="enemies_wall" width="100" height="100">
-  <object x="2661" y="481" width="23" height="28"/>
-  <object x="2851" y="484" width="24" height="26"/>
- </objectgroup>
+ <objectgroup name="enemies_wall" width="100" height="100"/>
  <objectgroup name="bonus_jump" width="100" height="100">
   <object x="1569" y="418" width="30" height="29"/>
+ </objectgroup>
+ <objectgroup name="end" width="100" height="100">
+  <object x="2983" y="450" width="55" height="59"/>
  </objectgroup>
 </map>

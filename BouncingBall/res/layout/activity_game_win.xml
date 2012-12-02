@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pink"
+    tools:context=".GameWin" >
+
+    <TextView
+        android:id="@+id/timeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="57dp"
+        android:text="time : "
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/lifesTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/timeTV"
+        android:layout_alignLeft="@+id/timeTV"
+        android:layout_marginBottom="25dp"
+        android:text="lifes : "
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/nextBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lifesTV"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="67dp"
+        android:background="@drawable/button_custom_submenu"
+        android:text="next" />
+
+    <Button
+        android:id="@+id/continueBtn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/timeTV"
+        android:layout_alignLeft="@+id/nextBtn"
+        android:background="@drawable/button_custom_submenu"
+        android:text="retry" />
+
+    <Button
+        android:id="@+id/quitBtn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/continueBtn2"
+        android:layout_below="@+id/continueBtn2"
+        android:layout_marginTop="33dp"
+        android:background="@drawable/button_custom_submenu"
+        android:text="quit" />
+
+</RelativeLayout>

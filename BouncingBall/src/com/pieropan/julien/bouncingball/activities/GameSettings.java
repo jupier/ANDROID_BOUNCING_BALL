@@ -1,10 +1,11 @@
 package com.pieropan.julien.bouncingball.activities;
 
+import com.pieropan.julien.bouncingball.helpers.MyIntent;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -15,8 +16,7 @@ public class GameSettings extends Activity {
 	
 	private Typeface font = null;
 
-	private boolean isMusic = true;
-	private boolean isSounds = true;
+	private MyIntent extras = null;
 	
 	private CheckBox cbMusic = null;
 	private CheckBox cbSounds = null;
@@ -43,8 +43,8 @@ public class GameSettings extends Activity {
 		
 		loadIntents();
 		
-		cbMusic.setChecked(isMusic);
-		cbSounds.setChecked(isSounds);
+		cbMusic.setChecked(this.extras.isMusic());
+		cbSounds.setChecked(this.extras.isSounds());
 		
 		createListeners();
 	}
@@ -53,8 +53,7 @@ public class GameSettings extends Activity {
 	{
 		Bundle extras = this.getIntent().getExtras();
 		
-		this.isMusic = extras.getBoolean(GameMenu.INTENT_SETTING_MUSIC);
-		this.isSounds = extras.getBoolean(GameMenu.INTENT_SETTING_SOUNDS);
+		this.extras = (MyIntent) extras.getSerializable(GameMenu.INTENT_NAME);
 	}
 
 	private void createListeners()
@@ -63,9 +62,12 @@ public class GameSettings extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				
+				extras.setMusic(cbMusic.isChecked());
+				extras.setSounds(cbSounds.isChecked());
+				
 				mIntent = new Intent(GameSettings.this, GameMenu.class);
-				mIntent.putExtra(GameMenu.INTENT_SETTING_MUSIC, cbMusic.isChecked());
-				mIntent.putExtra(GameMenu.INTENT_SETTING_SOUNDS, cbSounds.isChecked());
+				mIntent.putExtra(GameMenu.INTENT_NAME, extras);
 				startActivity(mIntent);
 				finish();
 			}

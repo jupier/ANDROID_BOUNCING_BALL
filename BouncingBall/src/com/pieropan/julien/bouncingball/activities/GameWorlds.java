@@ -2,7 +2,6 @@ package com.pieropan.julien.bouncingball.activities;
 
 import java.util.List;
 
-import com.pieropan.julien.bouncingball.blocks.Player;
 import com.pieropan.julien.bouncingball.helpers.MapSelector;
 import com.pieropan.julien.bouncingball.helpers.MyIntent;
 
@@ -12,43 +11,43 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
 
-public class GameMaps extends Activity {
+public class GameWorlds extends Activity {
 
 	// FIELDS
-
+	
 	private Typeface font = null;
+	
+	private ListView worldLV = null;
+	private Button returnBTN = null;
 	
 	private MyIntent extras = null;
 	
-	private ListView mapsLV = null;
-	private Button btnReturn = null;
-	
-	private List<String> mapList = null;
+	private List<String> worldList = null;
 	
 	private Intent mIntent = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_game_maps);
+		setContentView(R.layout.activity_game_worlds);
 		
 		loadIntents();
 		
 		font = Typeface.createFromAsset(getAssets(), "font/Churli_cute5.ttf");
 		
-		btnReturn = (Button) findViewById(R.id.returnMapsBTN);
-		mapsLV = (ListView) findViewById(R.id.mapsLV);
+		worldLV = (ListView) findViewById(R.id.worldLIST);
+		returnBTN = (Button) findViewById(R.id.returnWorldBTN);
 		
-		this.btnReturn.setTypeface(font);
+		returnBTN.setTypeface(font);
 		
-		mapList = MapSelector.getInstance().getMaps(extras.getWorld());
+		worldList = MapSelector.getInstance().getWorlds();
 		
-		mapsLV.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mapList));
+		worldLV.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, worldList));
 		
 		createListeners();
 	}
@@ -64,27 +63,26 @@ public class GameMaps extends Activity {
 	}
 	
 	private void createListeners()
-	{	
-		btnReturn.setOnClickListener(new View.OnClickListener() {
+	{
+		returnBTN.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				mIntent = new Intent(GameMaps.this, GameWorlds.class);
+				mIntent = new Intent(GameWorlds.this, GameMenu.class);
 				mIntent.putExtra(GameMenu.INTENT_NAME, extras);
 				startActivity(mIntent);
 				finish();
 			}
 		});
 		
-		mapsLV.setOnItemClickListener(new OnItemClickListener() {
+		worldLV.setOnItemClickListener(new OnItemClickListener() {
 			  @Override
 			  public void onItemClick(AdapterView<?> parent, View view,
 			    int position, long id) {
 			    
-				  extras.setMap(MapSelector.getInstance().getCarac(extras.getWorld(), mapList.get(position)));
-				  extras.setLifes(Player.PLAYER_LIFES);
+				  extras.setWorld(worldList.get(position));
 				  
-				  mIntent = new Intent(GameMaps.this, GameMain.class);
+				  mIntent = new Intent(GameWorlds.this, GameMaps.class);
 				  mIntent.putExtra(GameMenu.INTENT_NAME, extras);
 				  startActivity(mIntent);
 				  finish();
@@ -92,4 +90,5 @@ public class GameMaps extends Activity {
 			  }
 		});
 	}
+
 }

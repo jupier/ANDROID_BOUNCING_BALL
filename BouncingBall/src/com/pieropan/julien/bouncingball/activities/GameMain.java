@@ -3,7 +3,6 @@ package com.pieropan.julien.bouncingball.activities;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -23,23 +22,19 @@ import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.LoopEntityModifier;
-import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.modifier.PathModifier;
-import org.andengine.entity.modifier.SequenceEntityModifier;
 import org.andengine.entity.modifier.PathModifier.IPathModifierListener;
 import org.andengine.entity.modifier.PathModifier.Path;
 import org.andengine.entity.primitive.Line;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.RepeatingSpriteBackground;
-import org.andengine.entity.shape.IShape;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
-import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.extension.tmx.TMXLoader;
 import org.andengine.extension.tmx.TMXObject;
 import org.andengine.extension.tmx.TMXObjectGroup;
@@ -74,6 +69,7 @@ import com.pieropan.julien.bouncingball.blocks.Box;
 import com.pieropan.julien.bouncingball.blocks.Enemy;
 import com.pieropan.julien.bouncingball.blocks.EnemyBox;
 import com.pieropan.julien.bouncingball.blocks.Player;
+import com.pieropan.julien.bouncingball.helpers.MyIntent;
 import com.pieropan.julien.bouncingball.helpers.MyUserData;
 
 import android.graphics.Color;
@@ -84,8 +80,6 @@ import android.content.Intent;
 public class GameMain extends SimpleBaseGameActivity implements IAccelerationListener, IScrollDetectorListener {
 
 	// CONSTANTS
-	
-	private Integer enemyId = 0;
 	
 	private static final int CAMERA_WIDTH = 800;
 	private static final int CAMERA_HEIGHT = 480;
@@ -104,16 +98,11 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 	private static final String SOUND_BONUS_RES = "bonus.ogg";
 	private static final String MUSIC_RES = "Kirby_Theme.ogg";
 
-	private static final Float ENEMIES_VELOCITY = 2.0f;
-
 	// FIELDS
 	
+	private MyIntent extras = null;
+	
 	private Intent mIntent = null;
-	private String mapNameIntent = null;
-	private Integer playerLifesIntent = null;
-	private Integer mapTimerIntent;
-	private boolean isMusic = true;
-	private boolean isSounds = true;
 	
 	private SmoothCamera mCamera = null;
 	private SurfaceScrollDetector mScrollDetector = null;
@@ -137,10 +126,8 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 	private ITextureRegion mControlTextureRegion = null;
 	
 		// PLAYER
-	private boolean isLanded = false;
 	private boolean isDead = false;
-	private boolean isEnemiesWall = false;
-	private boolean isAgainstWall = false;
+	private boolean isEnd = false;
 	private Player player = null;
 	private Body playerBody = null;
 	private BitmapTextureAtlas mPlayerTextureAtlas = null;
@@ -172,8 +159,6 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 	
 	@Override
 	public EngineOptions onCreateEngineOptions() {
-		
-		enemyId = 0;
 		
 		mCamera = new SmoothCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT, 200, 200, 1.0f);
 		
@@ -219,7 +204,6 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 		this.mBonusTextureAtlas = new BitmapTextureAtlas(this.getTextureManager(), 64, 64, TextureOptions.BILINEAR);
 		this.mBonusTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(this.mBonusTextureAtlas, this, GameMain.BONUS_RES, 0, 32, 2, 1);
 		this.mBonusTextureAtlas.load();
-		
 	}
 	
 	private void loadFont()
@@ -254,11 +238,11 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 	
 	private void loadMap()
 	{
-		this.mRepeatingSpriteBackground = new RepeatingSpriteBackground(CAMERA_WIDTH, CAMERA_HEIGHT, this.getTextureManager(), AssetBitmapTextureAtlasSource.create(this.getAssets(), "gfx/" + this.mapNameIntent + ".png"), this.getVertexBufferObjectManager());
+		this.mRepeatingSpriteBackground = new RepeatingSpriteBackground(CAMERA_WIDTH, CAMERA_HEIGHT, this.getTextureManager(), AssetBitmapTextureAtlasSource.create(this.getAssets(), "gfx/" + extras.getMap().getName() + ".png"), this.getVertexBufferObjectManager());
 		
 		this.mTmxLoader = new TMXLoader(this.getAssets(), this.mEngine.getTextureManager(), TextureOptions.BILINEAR_PREMULTIPLYALPHA, this.getVertexBufferObjectManager());
 		try {
-			this.mTMXTiledMap = this.mTmxLoader.loadFromAsset("tmx/" + this.mapNameIntent + ".tmx");
+			this.mTMXTiledMap = this.mTmxLoader.loadFromAsset("tmx/" + extras.getMap().getName() + ".tmx");
 		} catch (TMXLoadException e) {
 			e.printStackTrace();
 		}
@@ -269,8 +253,12 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 		{
 			if (group.getName().equals(Box.BOX_NAME))
 				makeRectanglesFromObjects(group, Box.BOX_NAME);
+			if (group.getName().equals("end"))
+				makeRectanglesFromObjects(group, "end");
+			
 			if (group.getName().equals(Box.BOX_VERTICAL_NAME))
 				makeRectanglesFromObjects(group, Box.BOX_VERTICAL_NAME);
+			
 			if (group.getName().equals(EnemyBox.ENEMIES_BOX_NAME))
 				makeRectanglesFromObjects(group, EnemyBox.ENEMIES_BOX_NAME);
 			if (group.getName().equals("enemies"))
@@ -296,7 +284,7 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 			rect.setVisible(false);
 			rect.setUserData(new MyUserData(name));
 			
-			if (name.equals(Box.BOX_NAME) || name.equals(Box.BOX_VERTICAL_NAME) || name.equals("enemies"))
+			if (name.equals(Box.BOX_NAME) || name.equals(Box.BOX_VERTICAL_NAME) || name.equals("enemies") || name.equals("end"))
 				rectBody = PhysicsFactory.createBoxBody(this.mPhysicsWorld, rect, BodyType.StaticBody, Box.BOX_FIXTURE_DEF);
 			else if (name.equals(EnemyBox.ENEMIES_BOX_NAME))
 				rectBody = PhysicsFactory.createBoxBody(this.mPhysicsWorld, rect, BodyType.StaticBody, EnemyBox.BOX_ENEMIES_FIXTURE_DEF);
@@ -312,7 +300,7 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 		TMXObject object = group.getTMXObjects().get(0);
 		
 		this.player = new Player(object.getX(), object.getY(), this.mPlayerTextureRegion, this.getVertexBufferObjectManager());
-		this.player.setLifes(this.playerLifesIntent);
+		this.player.setLifes(extras.getLifes());
 		
 		this.playerBody = PhysicsFactory.createCircleBody(this.mPhysicsWorld, this.player, BodyType.DynamicBody, Player.PLAYER_FIXTURE_DEF);
 		this.playerBody.setUserData(new MyUserData(Player.PLAYER_NAME));
@@ -389,18 +377,14 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 	
 	private void loadIntents()
 	{
-		Bundle extras = this.getIntent().getExtras();
+		Bundle extra = this.getIntent().getExtras();
 		
-		this.playerLifesIntent = extras.getInt(GameMenu.INTENT_MAP_LIFE);
-		this.mapNameIntent = extras.getString(GameMenu.INTENT_MAP_NAME);
-		this.isMusic = extras.getBoolean(GameMenu.INTENT_SETTING_MUSIC);
-		this.isSounds = extras.getBoolean(GameMenu.INTENT_SETTING_SOUNDS);
+		if (extra != null)
+			extras = (MyIntent) extra.getSerializable(GameMenu.INTENT_NAME);
 	}
 	
 	@Override
 	protected Scene onCreateScene() {
-		
-		this.mapTimerIntent = 30000;
 		
 		this.mScene = new Scene();
 		this.mScene.setBackground(this.mRepeatingSpriteBackground);
@@ -415,11 +399,11 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 		createGameUpdateHandler();
 		createGameTimerHandler();
 		
-		currentTime = this.mapTimerIntent;
+		currentTime = extras.getMap().getTimer();
 		
 		this.mScene.registerUpdateHandler(this.mPhysicsWorld);
 		
-		if (this.isMusic)
+		if (extras.isMusic())
 			this.mMusic.play();
 		
 		return this.mScene;
@@ -448,8 +432,7 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 			public boolean onAreaTouched(TouchEvent pEvent, float pX, float pY) {
 				if (pEvent.isActionDown()) {
 					mIntent = new Intent(GameMain.this, GameMenu.class);
-					mIntent.putExtra(GameMenu.INTENT_SETTING_MUSIC, isMusic);
-					mIntent.putExtra(GameMenu.INTENT_SETTING_SOUNDS, isSounds);
+					mIntent.putExtra(GameMenu.INTENT_NAME, extras);
 					startActivity(mIntent);
 					finish();
 					return true;
@@ -461,11 +444,11 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 		mHUD.registerTouchArea(mMenuText);
 		mHUD.attachChild(mMenuText);
 		
-		this.mLifesChangeableText = new Text(5, 0, mFont, "lives : " + this.playerLifesIntent, "score : XXXX".length(), this.getVertexBufferObjectManager());
+		this.mLifesChangeableText = new Text(5, 0, mFont, "lives : " + this.extras.getLifes(), "score : XXXX".length(), this.getVertexBufferObjectManager());
 		this.mLifesChangeableText.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 		this.mHUD.attachChild(this.mLifesChangeableText);
 		
-		this.mTimerChangeableText = new Text(this.CAMERA_WIDTH / 7 * 2, 0, mFont, "time : " + this.mapTimerIntent, "time : XXXXX".length(), this.getVertexBufferObjectManager());
+		this.mTimerChangeableText = new Text(GameMain.CAMERA_WIDTH / 7 * 2, 0, mFont, "time : " + extras.getMap().getTimer(), "time : XXXXX".length(), this.getVertexBufferObjectManager());
 		this.mTimerChangeableText.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 		this.mHUD.attachChild(this.mTimerChangeableText);
 		
@@ -474,7 +457,7 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 			@Override
 			public boolean onAreaTouched(TouchEvent pEvent, float pX, float pY) {
 				if (pEvent.isActionDown()) {
-					if (isSounds)
+					if (extras.isSounds())
 						mJumpSound.play();
 					playerBody.applyLinearImpulse(0, player.getJumpVelocity(), playerBody.getPosition().x, playerBody.getPosition().y);
 					return true;
@@ -509,15 +492,15 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 					fix1_name = "";
 					fix2_name = "";
 				}
-
-				if ((fix1_name.equals("player") && fix2_name.equals("wall")) || 
-						(fix2_name.equals("player") && fix1_name.equals("wall"))) {
-					isLanded = true;
-				}
 				
 				if ((fix1_name.equals("player") && fix2_name.equals("enemies")) || 
 						(fix2_name.equals("player") && fix1_name.equals("enemies"))) {
 					isDead = true;
+				}
+				
+				if ((fix1_name.equals("player") && fix2_name.equals("end")) || 
+						(fix2_name.equals("player") && fix1_name.equals("end"))) {
+					isEnd = true;
 				}
 
 
@@ -532,22 +515,10 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 
 			@Override
 			public void postSolve(Contact contact, ContactImpulse impulse) {
-				
 				if (isDead)
-				{
-					isDead = false;
-					if (isSounds)
-						mDeadSound.play();
-					player.setLifes(player.getLifes() - 1);
-					mIntent = new Intent(GameMain.this, GameHit.class);
-					mIntent.putExtra(GameMenu.INTENT_MAP_NAME, mapNameIntent);
-					mIntent.putExtra(GameMenu.INTENT_MAP_LIFE, player.getLifes());
-					mIntent.putExtra(GameMenu.INTENT_SETTING_MUSIC, isMusic);
-					mIntent.putExtra(GameMenu.INTENT_SETTING_SOUNDS, isSounds);
-					startActivity(mIntent);
-					finish();
-				}
-				
+					gameOver();
+				if (isEnd)
+					gameWin();
 			}
 		});
 	}
@@ -561,7 +532,7 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 				{
 					if (sp.collidesWith(player))
 					{
-						endGame();
+						gameOver();
 					}
 				}
 				
@@ -571,7 +542,7 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 					{
 						if (player.getJumpVelocity() < Player.PLAYER_JUMP_VELOCITY * 1.5f)
 						{
-							if (isSounds)
+							if (extras.isSounds())
 								mBonusSound.play();
 							player.setJumpVelocity();
 						}
@@ -587,15 +558,23 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 		});
 	}
 	
-	private void endGame()
+	private void gameOver()
 	{
-		if (isSounds)
+		if (extras.isSounds())
 			mDeadSound.play();
 		mIntent = new Intent(GameMain.this, GameHit.class);
-		mIntent.putExtra(GameMenu.INTENT_MAP_NAME, mapNameIntent);
-		mIntent.putExtra(GameMenu.INTENT_MAP_LIFE, player.getLifes());
-		mIntent.putExtra(GameMenu.INTENT_SETTING_MUSIC, isMusic);
-		mIntent.putExtra(GameMenu.INTENT_SETTING_SOUNDS, isSounds);
+		
+		mIntent.putExtra(GameMenu.INTENT_NAME, extras);
+		startActivity(mIntent);
+		finish();
+	}
+	
+	private void gameWin()
+	{
+		mIntent = new Intent(GameMain.this, GameWin.class);
+		
+		extras.setTimer(this.currentTime);
+		mIntent.putExtra(GameMenu.INTENT_NAME, extras);
 		startActivity(mIntent);
 		finish();
 	}
@@ -605,6 +584,9 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 	        @Override
 	        public void onTimePassed(final TimerHandler pTimerHandler) {
 	        	currentTime = currentTime - 10;
+	        	
+	        	if (currentTime <= 0)
+	        		gameOver();
 	        	
 	        	if (currentTime < 1000)
 	        		mTimerChangeableText.setColor(1, 0, 0);
@@ -623,7 +605,7 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 		super.onResumeGame();
 		this.enableAccelerationSensor(this);
 		
-		if (this.isMusic)
+		if (extras.isMusic())
 			this.mMusic.resume();
 	}
 
@@ -632,7 +614,7 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 		super.onPauseGame();
 		this.disableAccelerationSensor();
 		
-		if (this.isMusic)
+		if (extras.isMusic())
 			this.mMusic.pause();
 	}
 	
@@ -657,8 +639,7 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 	@Override
 	public void onScrollStarted(ScrollDetector pScollDetector, int pPointerID,
 			float pDistanceX, float pDistanceY) {
-		// TODO Auto-generated method stub
-		
+		createGameTimerHandler();
 	}
 	@Override
 	public void onScroll(ScrollDetector pScollDetector, int pPointerID,

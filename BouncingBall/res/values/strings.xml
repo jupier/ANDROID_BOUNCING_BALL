@@ -10,5 +10,8 @@
     <string name="title_activity_game_settings">GameSettings</string>
     <string name="title_activity_ga">Ga</string>
     <string name="title_activity_game_maps">GameMaps</string>
+    <string name="title_activity_game_win">GameWin</string>
+    <string name="title_activity_game_world">GameWorld</string>
+    <string name="title_activity_game_worlds">GameWorlds</string>
 
 </resources>
