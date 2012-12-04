@@ -5,7 +5,7 @@
  </tileset>
  <layer name="blocks" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt2DtPwzAYhWG37JUAwY4Y2g1+AeIOC0jcWUDizlhACDb+Ol8EUYNrJ3biOCF6H+lI0FLb9cmltK+U6hdkRrnbyQRmPclchcx7zEUfxWYVfbQJfbSL3sdITe+56TH6qEfM82Nb/XSxG2jtXZT0MVD5e54+P1TT54pPH6eSM8l5oLV3Uczz417yIHkMtPYuitlH4j3Iqv3sSfYbmLeM2H004UJy2fQiHOl9DJT7/aTOPjYkm5KtAGM9SZ4DjBOD3kdyzy7qI8b5cSQ5lpwEGOtD8ilZCTBW3dp6vbqR3EruKo6zpCZrXa66qAiK+hgWPJ/2sVpi7uR4XbPkRfIqefMY70ByaHh8/Jv/wNaHqQfT/+lJH8n+rau/+5nKu0YUfXfs+x3yleTa8W+zbGsMfX1zGa/q9arKni44zrFoeG3Pcy6f1zcZ297aPk/pj/nMZdqnsUNse5muw7eTtnZhyijzXoti2wvbmD7XHte9NK0hnS+Z60tLT00+0+uvsz2uZ6j+vidbXMfzPW/y7itl5ivbSYzjehRwD8t0Yvv7svcPl+OmTCd5XbjOWVeq9Oe6dpcubGPp69N/z7uemOJzXgxU2OtENsMGO88e/yE+X1Xpvs73mXd8ltl/23hVz2G9j77h5xBx+W4m5nHY5pj2gv1ptg8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQPd8A/5VQd8=
+   eJzt2Etv00AUhuHTsI8EVdmwQkRKpC7oL0DcYQOCltsGxB02IC5CsAH+OmdUjTqZzs2esWOi95E+qXXtmck5tuN6JiKzTM5ozpFm2ak8flfK3XKCsLNCP6aEfkyL34+VnK55aBv9GMaY18dNOe7F7UZr30amH3NJ19z+fSmnr5Uu/Xikeax50mjt22jM6+Ot5p3mfaO1T8HfQGqM2Q/jR+V6+7ijuTvAuC8lXJMHFWOO3Y9NeKp5NtDYXwKp4fdjLuXfJ0P245rmuuZGg7E+aD42GGcMfj/Md3auH2NcHw81h5qjBmP91PzSXG4w1tCmer96pXmteVM5zkU5Weul2kXJ8fsl+96uxX6+XD+Wmb/bfhx0nNcw5+uVSL5qvmm+F4xzT3Pf+d3Uwq1Di/u6ra/5zAtZPw/derjbFs72VF8+aT5rLki8H6E+hP5PN+sy9bsq6/W0UveI3Ltj9x1yynPNi8w+KbE1uttNndz6ms8deta1sXVdOPuH5jH7/tb80exL/f2qpqZ7hXOcDxxrz9c+/csdv8nEaht7nvK3dZkrVKfQ82Lu+dG9d8w7zOUf/z9k5XzWXGK1iI1Zeu6m+LUMrcHOZ+by7yM7cvJM7x8X2+5nKeufKZbS8bpeN6nvlT7z9e3JGOf1qmEN+/Qktn/f74+S86ZPT1K9KJ2zVRaBGtb0v2S/kl7ExvLX5/+eup+E0uW6mEvb+4Stv5sxe+/3I9eblnMNOUef83PZcLzaa9jvxyzwc4uUvJsZ8zycckK1oD6b7QcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYPv8A1QXVPs=
   </data>
  </layer>
  <objectgroup name="wall" width="100" height="100">
@@ -42,16 +42,39 @@
   <object x="1580" y="400" width="26" height="9"/>
   <object x="1659" y="388" width="29" height="11"/>
   <object x="1656" y="398" width="26" height="7"/>
+  <object x="1476" y="421" width="56" height="25"/>
+  <object x="2148" y="421" width="149" height="58"/>
+  <object x="2213" y="389" width="83" height="30"/>
+  <object x="2532" y="387" width="85" height="94"/>
+  <object x="2618" y="421" width="64" height="62"/>
+  <object x="2371" y="419" width="90" height="28"/>
+  <object x="322" y="2" width="893" height="24"/>
+  <object x="1218" y="4" width="1056" height="22"/>
+  <object x="2276" y="1" width="929" height="26"/>
  </objectgroup>
  <objectgroup name="enemies" width="100" height="100">
   <object x="804" y="514" width="278" height="18"/>
   <object x="803" y="651" width="282" height="21"/>
   <object x="1570" y="554" width="123" height="22"/>
   <object x="1603" y="417" width="58" height="19"/>
+  <object x="2339" y="266" width="152" height="19"/>
+  <object x="2306" y="457" width="219" height="21"/>
+  <object x="2852" y="459" width="28" height="18"/>
+  <object x="2339" y="291" width="152" height="15"/>
+  <object x="2312" y="260" width="20" height="24"/>
+  <object x="2498" y="260" width="19" height="25"/>
+  <object x="2340" y="233" width="152" height="20"/>
  </objectgroup>
  <objectgroup name="player" width="100" height="100">
   <object x="419" y="453" width="27" height="25"/>
  </objectgroup>
- <objectgroup name="enemies_move" width="100" height="100"/>
+ <objectgroup name="enemies_move" width="100" height="100">
+  <object x="802" y="419" width="156" height="27"/>
+  <object x="1794" y="323" width="28" height="121"/>
+  <object x="1891" y="451" width="122" height="26"/>
+ </objectgroup>
  <objectgroup name="enemies_wall" width="100" height="100"/>
+ <objectgroup name="end" width="100" height="100">
+  <object x="2891" y="427" width="83" height="52"/>
+ </objectgroup>
 </map>

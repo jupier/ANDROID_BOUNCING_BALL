@@ -466,7 +466,7 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 			}
 
 		};
-		jump.setScale(1.5f);
+		jump.setScale(2.0f);
 		mHUD.registerTouchArea(jump);
 		mHUD.attachChild(jump);
 		
