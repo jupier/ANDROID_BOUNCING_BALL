@@ -1,10 +1,14 @@
 package com.pieropan.julien.bouncingball.activities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.pieropan.julien.bouncingball.blocks.Player;
+import com.pieropan.julien.bouncingball.database.HighScore;
+import com.pieropan.julien.bouncingball.database.HighScoreDAO;
 import com.pieropan.julien.bouncingball.helpers.MapSelector;
 import com.pieropan.julien.bouncingball.helpers.MyIntent;
+import com.pieropan.julien.bouncingball.listview.MapRow;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -16,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
 public class GameMaps extends Activity {
 
@@ -27,15 +32,22 @@ public class GameMaps extends Activity {
 	
 	private ListView mapsLV = null;
 	private Button btnReturn = null;
+	private TextView mapsSelTV = null;
 	
 	private List<String> mapList = null;
 	
 	private Intent mIntent = null;
 	
+	private HighScoreDAO highScoreDAO = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game_maps);
+		
+		// Instantation de la classe dao pour la db
+		this.highScoreDAO = new HighScoreDAO(this);
+		this.highScoreDAO.open();
 		
 		loadIntents();
 		
@@ -43,14 +55,39 @@ public class GameMaps extends Activity {
 		
 		btnReturn = (Button) findViewById(R.id.returnMapsBTN);
 		mapsLV = (ListView) findViewById(R.id.mapsLV);
+		mapsSelTV = (TextView) findViewById(R.id.textView1);
 		
 		this.btnReturn.setTypeface(font);
+		this.mapsSelTV.setTypeface(font);
 		
 		mapList = MapSelector.getInstance().getMaps(extras.getWorld());
 		
-		mapsLV.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mapList));
+		mapsLV.setAdapter(new MapRowAdaptater(this, loadListRow()));
 		
 		createListeners();
+	}
+	
+	private List<MapRow> loadListRow()
+	{
+		Integer timer = null;
+		List<MapRow> items = new ArrayList<MapRow>();
+		List<HighScore> highScores = this.highScoreDAO.getHighScores(this.extras.getWorld());
+		
+		for (String m : mapList)
+		{
+			timer = null;
+			for (HighScore h : highScores)
+			{
+				if (h.getMap().equals(m) && h.getWorld().equals(extras.getWorld()))
+					timer = h.getTimer();
+			}
+			if (timer == null)
+				items.add(new MapRow(m, null));
+			else
+				items.add(new MapRow(m, timer.toString()));
+		}
+		
+		return items;
 	}
 	
 	private void loadIntents()

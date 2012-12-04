@@ -17,8 +17,8 @@ public class MapSelector {
 	
 	//	LIST OF MAPS IN THE WORLDS
 	private final String[][][] LEVEL_NAMES = 	{
-											{{"map_island", "30000"}},
-											{{"map_cave", "40000"}}
+											{{"map_island_beginner", "4000"}, {"map_island", "6000"}},
+											{{"map_cave", "4000"}}
 											};
 	
 	private static MapSelector singleton = null;
@@ -37,7 +37,7 @@ public class MapSelector {
 		{
 			List<MapCaracteristic> levels = new ArrayList<MapCaracteristic>();
 			for (String level_name[] : LEVEL_NAMES[i])
-				levels.add(new MapCaracteristic(level_name[0], level_name[1]));
+				levels.add(levels.size(), new MapCaracteristic(level_name[0], level_name[1]));
 			world.put(world_name, levels);
 			i++;
 		}
@@ -67,7 +67,7 @@ public class MapSelector {
 		List<String> mapName = new ArrayList<String>();
 		
 		for (MapCaracteristic map : world.get(worldName))
-			mapName.add(0, map.getName());
+			mapName.add(mapName.size(), map.getName());
 		
 		return mapName;
  	}
@@ -95,7 +95,6 @@ public class MapSelector {
 				index = world.get(worldName).indexOf(map);
 			}
 		}
-		System.out.println(">>>>>>>>>" + index);
 		if ((index + 1) >= world.get(worldName).size())
 			return null;
 		return world.get(worldName).get(index + 1);

@@ -1,5 +1,7 @@
 package com.pieropan.julien.bouncingball.activities;
 
+import com.pieropan.julien.bouncingball.database.HighScore;
+import com.pieropan.julien.bouncingball.database.HighScoreDAO;
 import com.pieropan.julien.bouncingball.helpers.MapCaracteristic;
 import com.pieropan.julien.bouncingball.helpers.MapSelector;
 import com.pieropan.julien.bouncingball.helpers.MyIntent;
@@ -30,13 +32,29 @@ public class GameWin extends Activity {
 	
 	private MapCaracteristic nextCarac = null;
 	
+	private HighScoreDAO highScoreDAO = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game_win);
 
+		// Instantation de la classe dao pour la db
+		this.highScoreDAO = new HighScoreDAO(this);
+		this.highScoreDAO.open();
+		
 		// Chargement des données à partir de l'intent
 		loadIntents();
+		
+		HighScore h = this.highScoreDAO.getHighScores(this.extras.getWorld()).get(0);
+		
+		System.out.println(h.getWorld() + " " + h.getMap() + " " + h.getTimer());
+		
+		updateScore();
+		
+		h = this.highScoreDAO.getHighScores(this.extras.getWorld()).get(0);
+		
+		System.out.println(h.getWorld() + " " + h.getMap() + " " + h.getTimer());
 		
 		// Chargement de la police de caractère
 		font = Typeface.createFromAsset(getAssets(), "font/Churli_cute5.ttf");
@@ -55,7 +73,7 @@ public class GameWin extends Activity {
 		tvTime.setTypeface(font);
 		
 		tvLifes.setText("life : " + this.extras.getLifes());
-		tvTime.setText("time : " + this.extras.getTimer());
+		tvTime.setText("time : " + (this.extras.getMap().getTimer() - this.extras.getTimer()));
 		
 		if (this.nextCarac == null)
 			this.btnNext.setEnabled(false);
@@ -73,6 +91,26 @@ public class GameWin extends Activity {
 		{
 			this.extras = (MyIntent) extra.getSerializable(GameMenu.INTENT_NAME);
 			this.nextCarac = MapSelector.getInstance().nextCarac(this.extras.getWorld(), this.extras.getMap().getName());
+		}
+	}
+	
+	private void updateScore()
+	{
+		if (this.highScoreDAO.exist(this.extras.getWorld(), this.extras.getMap().getName()))
+		{
+			System.out.println("update");
+			
+			this.highScoreDAO.updateHighScore(	this.extras.getWorld(), 
+												this.extras.getMap().getName(),
+												this.extras.getMap().getTimer() - this.extras.getTimer());
+		}
+		else
+		{
+			System.out.println("create");
+			
+			this.highScoreDAO.createHighScore(	this.extras.getWorld(), 
+												this.extras.getMap().getName(),
+												this.extras.getMap().getTimer() - this.extras.getTimer());
 		}
 	}
 	

@@ -427,7 +427,7 @@ public class GameMain extends SimpleBaseGameActivity implements IAccelerationLis
 		line.setColor(0, 0, 0);
 		this.mHUD.attachChild(line);
 		
-		Text mMenuText = new Text(GameMain.CAMERA_WIDTH / 7 * 6 + 8, 0, mFont, "pause", 5, this.getVertexBufferObjectManager()) {
+		Text mMenuText = new Text(GameMain.CAMERA_WIDTH / 7 * 6 + 2, 0, mFont, "pause", 5, this.getVertexBufferObjectManager()) {
 			@Override
 			public boolean onAreaTouched(TouchEvent pEvent, float pX, float pY) {
 				if (pEvent.isActionDown()) {

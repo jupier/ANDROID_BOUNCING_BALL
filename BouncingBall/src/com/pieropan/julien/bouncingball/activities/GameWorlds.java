@@ -15,6 +15,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class GameWorlds extends Activity {
 
@@ -24,6 +25,7 @@ public class GameWorlds extends Activity {
 	
 	private ListView worldLV = null;
 	private Button returnBTN = null;
+	private TextView worldSelTV = null;
 	
 	private MyIntent extras = null;
 	
@@ -42,8 +44,10 @@ public class GameWorlds extends Activity {
 		
 		worldLV = (ListView) findViewById(R.id.worldLIST);
 		returnBTN = (Button) findViewById(R.id.returnWorldBTN);
+		worldSelTV = (TextView) findViewById(R.id.textView2);
 		
 		returnBTN.setTypeface(font);
+		worldSelTV.setTypeface(font);
 		
 		worldList = MapSelector.getInstance().getWorlds();
 		
